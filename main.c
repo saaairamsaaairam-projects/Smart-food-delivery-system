@@ -304,7 +304,7 @@ void customerMenu(int customerId)
                         break;
                     }
 
-                    do
+                    while (1)
                     {
                         uiHeader("RESTAURANT MENU");
                         displayMenu(restaurantId);
@@ -326,23 +326,28 @@ void customerMenu(int customerId)
                         printf("\nSelected Item : %s\n", itemName);
                         printf("Price         : Rs. %.2f\n", unitPrice);
 
-                        if (!readInt("Quantity: ", &quantity))
+                        do
                         {
-                            return;
-                        }
+                            if (!readInt("Quantity: ", &quantity))
+                            {
+                                return;
+                            }
 
-                        if (quantity <= 0 || quantity > MAX_ITEM_QUANTITY)
+                            if (quantity <= 0 || quantity > MAX_ITEM_QUANTITY)
+                            {
+                                printf("\nQuantity must be between 1 and %d.\n",
+                                       MAX_ITEM_QUANTITY);
+                            }
+                        } while (quantity <= 0 || quantity > MAX_ITEM_QUANTITY);
+
+                        if (!addToCart(restaurantId,
+                                       itemId,
+                                       itemName,
+                                       unitPrice,
+                                       quantity))
                         {
-                            printf("\nQuantity must be between 1 and %d.\n",
-                                   MAX_ITEM_QUANTITY);
-                            continue;
+                            break;
                         }
-
-                        addToCart(restaurantId,
-                                itemId,
-                                itemName,
-                                unitPrice,
-                                quantity);
 
                         displayCart();
 
@@ -360,9 +365,13 @@ void customerMenu(int customerId)
                             }
                         } while (anotherItem != 1 && anotherItem != 2);
 
-                    } while (anotherItem == 1);
+                        if (anotherItem == 2)
+                        {
+                            break;
+                        }
+                    }
 
-                     displayCart();
+                    displayCart();
 
                     if (!isCartEmpty())
                     {
