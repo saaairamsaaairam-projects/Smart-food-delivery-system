@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "common.h"
 #include "input.h"
@@ -39,6 +40,123 @@ int saveCustomers(void)
     return success;
 }
 
+static int loadSampleCustomers(void)
+{
+    FILE *file = fopen("data/sample_customers.csv", "r");
+    Customer sampleCustomers[MAX_CUSTOMERS];
+    char line[512];
+    int lineNumber = 0;
+    int loadedCount = 0;
+    int valid = 1;
+
+    if (file == NULL)
+    {
+        return 0;
+    }
+
+    while (fgets(line, sizeof(line), file) != NULL)
+    {
+        char *fields[6];
+        char *cursor;
+        char *delimiter;
+        char *end;
+        long customerId;
+        size_t lineLength;
+        int fieldCount = 1;
+        int i;
+
+        lineLength = strlen(line);
+        if (lineLength > 0 && line[lineLength - 1] != '\n' && !feof(file))
+        {
+            valid = 0;
+            break;
+        }
+
+        line[strcspn(line, "\r\n")] = '\0';
+        if (line[0] == '\0')
+        {
+            continue;
+        }
+
+        if (lineNumber++ == 0)
+        {
+            continue;
+        }
+
+        fields[0] = line;
+        cursor = line;
+        while ((delimiter = strchr(cursor, ',')) != NULL && fieldCount < 6)
+        {
+            *delimiter = '\0';
+            cursor = delimiter + 1;
+            fields[fieldCount++] = cursor;
+        }
+
+        if (fieldCount != 6 || strchr(fields[5], ',') != NULL ||
+            loadedCount >= MAX_CUSTOMERS)
+        {
+            valid = 0;
+            break;
+        }
+
+        customerId = strtol(fields[0], &end, 10);
+        if (end == fields[0] || *end != '\0' || customerId <= 0 ||
+            customerId > MAX_CUSTOMERS ||
+            strlen(fields[1]) >= sizeof(sampleCustomers[loadedCount].name) ||
+            strlen(fields[2]) >= sizeof(sampleCustomers[loadedCount].phone) ||
+            strlen(fields[3]) >= sizeof(sampleCustomers[loadedCount].address) ||
+            strlen(fields[4]) >= sizeof(sampleCustomers[loadedCount].username) ||
+            strlen(fields[5]) >= sizeof(sampleCustomers[loadedCount].password))
+        {
+            valid = 0;
+            break;
+        }
+
+        for (i = 0; i < loadedCount; i++)
+        {
+            if (sampleCustomers[i].customerId == customerId ||
+                strcmp(sampleCustomers[i].username, fields[4]) == 0)
+            {
+                valid = 0;
+                break;
+            }
+        }
+        if (!valid)
+        {
+            break;
+        }
+
+        sampleCustomers[loadedCount].customerId = (int)customerId;
+        strcpy(sampleCustomers[loadedCount].name, fields[1]);
+        strcpy(sampleCustomers[loadedCount].phone, fields[2]);
+        strcpy(sampleCustomers[loadedCount].address, fields[3]);
+        strcpy(sampleCustomers[loadedCount].username, fields[4]);
+        strcpy(sampleCustomers[loadedCount].password, fields[5]);
+        loadedCount++;
+    }
+
+    if (ferror(file))
+    {
+        valid = 0;
+    }
+
+    if (fclose(file) != 0)
+    {
+        valid = 0;
+    }
+
+    if (!valid || loadedCount == 0)
+    {
+        printf("\nSample customer data is invalid; no demo accounts were loaded.\n");
+        return 0;
+    }
+
+    memcpy(customers, sampleCustomers, (size_t)loadedCount * sizeof(Customer));
+    customerCount = loadedCount;
+    printf("\nLoaded %d synthetic demo customer accounts.\n", customerCount);
+    return 1;
+}
+
 void loadCustomers(void)
 {
     FILE *file;
@@ -49,6 +167,7 @@ void loadCustomers(void)
     if (file == NULL)
     {
         customerCount = 0;
+        loadSampleCustomers();
         return;
     }
 

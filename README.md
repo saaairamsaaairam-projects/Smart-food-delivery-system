@@ -48,6 +48,12 @@ executable is in use, exit the running application before rebuilding.
 5. Create a customer account, log in, select a restaurant, add items, and check
 	 out.
 
+On a clean clone with no `data/customers.dat`, 20 synthetic demo accounts are
+loaded from `data/sample_customers.csv`. Their usernames are `demo01` through
+`demo20`; passwords are `DemoOnly01` through `DemoOnly20`. The first real
+account save creates `customers.dat`, which then takes precedence over the
+sample file.
+
 For the complete menu reference, workflows, data-file details, architecture,
 and troubleshooting, see [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md).
 
@@ -59,6 +65,8 @@ and troubleshooting, see [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md).
 	are rebuilt from saved orders when the program starts.
 - The `data/*.dat` files contain local binary records and are ignored by Git.
 	Back them up before moving, replacing, or deleting the project.
+- Only synthetic sample data is tracked under `data/`; local runtime databases
+	are intentionally not pushed.
 - This is a learning/demo application, not a production service. Customer
 	passwords are stored as plain text, and the admin credentials are hard-coded.
 	Do not use real passwords or sensitive personal information.

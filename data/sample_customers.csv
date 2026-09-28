@@ -1,0 +1,21 @@
+customer_id,name,phone,address,username,password
+1,Demo Customer 01,+1-202-555-0101,1 Demo Street,demo01,DemoOnly01
+2,Demo Customer 02,+1-202-555-0102,2 Demo Street,demo02,DemoOnly02
+3,Demo Customer 03,+1-202-555-0103,3 Demo Street,demo03,DemoOnly03
+4,Demo Customer 04,+1-202-555-0104,4 Demo Street,demo04,DemoOnly04
+5,Demo Customer 05,+1-202-555-0105,5 Demo Street,demo05,DemoOnly05
+6,Demo Customer 06,+1-202-555-0106,6 Demo Street,demo06,DemoOnly06
+7,Demo Customer 07,+1-202-555-0107,7 Demo Street,demo07,DemoOnly07
+8,Demo Customer 08,+1-202-555-0108,8 Demo Street,demo08,DemoOnly08
+9,Demo Customer 09,+1-202-555-0109,9 Demo Street,demo09,DemoOnly09
+10,Demo Customer 10,+1-202-555-0110,10 Demo Street,demo10,DemoOnly10
+11,Demo Customer 11,+1-202-555-0111,11 Demo Street,demo11,DemoOnly11
+12,Demo Customer 12,+1-202-555-0112,12 Demo Street,demo12,DemoOnly12
+13,Demo Customer 13,+1-202-555-0113,13 Demo Street,demo13,DemoOnly13
+14,Demo Customer 14,+1-202-555-0114,14 Demo Street,demo14,DemoOnly14
+15,Demo Customer 15,+1-202-555-0115,15 Demo Street,demo15,DemoOnly15
+16,Demo Customer 16,+1-202-555-0116,16 Demo Street,demo16,DemoOnly16
+17,Demo Customer 17,+1-202-555-0117,17 Demo Street,demo17,DemoOnly17
+18,Demo Customer 18,+1-202-555-0118,18 Demo Street,demo18,DemoOnly18
+19,Demo Customer 19,+1-202-555-0119,19 Demo Street,demo19,DemoOnly19
+20,Demo Customer 20,+1-202-555-0120,20 Demo Street,demo20,DemoOnly20

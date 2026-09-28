@@ -1,5 +1,6 @@
-SmartFoodDelivery.exe
 *.exe
-*.dat
-data/
 *.o
+*.dat
+/data/*
+!/data/README.md
+!/data/sample_customers.csv

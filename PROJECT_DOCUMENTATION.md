@@ -115,6 +115,11 @@ order workflow explains when a selected restaurant has no menu configured.
    password.
 3. Choose **Log in** and enter the account credentials.
 
+When no `data/customers.dat` exists, the application loads 20 synthetic demo
+accounts from `data/sample_customers.csv`. Use usernames `demo01` through
+`demo20` and matching passwords `DemoOnly01` through `DemoOnly20`. Once a
+customer database is saved, it takes precedence over the sample data.
+
 Names and addresses accept spaces. Customer passwords are currently stored in
 plain text; use demo-only credentials.
 
@@ -285,6 +290,7 @@ project directory so the files resolve under `data/`.
 | `data/restaurants.dat` | Count followed by fixed-size `Restaurant` records |
 | `data/orders.dat` | Count followed by fixed-size `Order` records |
 | `data/menus.dat` | Count followed by fixed-size `MenuItem` records; built-in defaults are used when this file is absent |
+| `data/sample_customers.csv` | Tracked synthetic demo accounts, used only when no `customers.dat` exists |
 
 The files are native binary data: an integer count followed by raw C structure
 bytes. Loaders check counts, record lengths, and selected fields before using
@@ -295,6 +301,10 @@ Customer, restaurant, order, and added-menu records are persisted. Cart state
 and the FIFO queue are not persisted. Pending eligible orders are restored into
 the priority queue at startup. Back up the `.dat` files before moving,
 replacing, or manually editing them; do not open them as text files.
+
+The repository contains only the synthetic sample CSV under `data/`. Runtime
+`.dat` databases remain excluded so customer records and passwords are not
+accidentally published.
 
 ## 10. Limits and Security
 
