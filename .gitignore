@@ -1,0 +1,5 @@
+SmartFoodDelivery.exe
+*.exe
+*.dat
+data/
+*.o
